@@ -22,7 +22,7 @@ struct ContentView: View { // thinks of : as "behaves as" rather than "is a"
         .padding()
         .foregroundColor(Color.orange)
         .font(Font.largeTitle)
-//        .font(viewModel.cards.count >= 10 ? Font.title2 : Font.largeTitle)
+        .font(viewModel.cards.count >= 10 ? Font.title2 : Font.largeTitle)
         
     }
 }
