@@ -45,7 +45,7 @@ struct CardView: View {
                     .fill()
             }
         }
-//        .aspectRatio(2.0/3.0, contentMode: .fit)
+        .aspectRatio(2.0/3.0, contentMode: .fit)
     }
 }
 
