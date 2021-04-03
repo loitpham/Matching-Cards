@@ -1,5 +1,5 @@
 //
-//  MemoryGame.swift
+//  EmojiMemoryGameModel.swift
 //  Memorize
 //
 //  Created by Loi Pham on 4/2/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> {
+struct EmojiMemoryGameModel<CardContent> {
     var cards: Array<Card>
     
     struct Card: Identifiable {
@@ -27,7 +27,21 @@ struct MemoryGame<CardContent> {
         cards.shuffle()
     }
     
-    func choose(card: Card) {
-        print("card chosen: \(card)")
+    mutating func choose(card: Card) {
+        print("Before: card chosen: \(card)")
+        let chosenIndex = index(of: card)
+        cards[chosenIndex].isFaceUp = !cards[chosenIndex].isFaceUp
+        print("After: card status: \(cards[chosenIndex])")
+    }
+    
+    // external name: 'of'
+    // internal name: 'card'
+    func index(of card: Card) -> Int {
+        for index in 0..<cards.count {
+            if cards[index].id == card.id {
+                return index
+            }
+        }
+        return 0 // TODO: replace 0 with some NotFound constant
     }
 }
