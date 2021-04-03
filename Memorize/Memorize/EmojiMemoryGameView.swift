@@ -21,9 +21,6 @@ struct EmojiMemoryGameView: View { // thinks of : as "behaves as" rather than "i
         }
         .padding()
         .foregroundColor(Color.orange)
-        .font(Font.largeTitle)
-        .font(viewModel.cards.count >= 10 ? Font.title2 : Font.largeTitle)
-        
     }
 }
 
@@ -31,22 +28,33 @@ struct CardView: View {
     var card: EmojiMemoryGameModel<String>.Card
     
     var body: some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10.0)
-                    .fill(Color.white)
-                
-                RoundedRectangle(cornerRadius: 10.0)
-                    .stroke(lineWidth: 3)
+        GeometryReader(content: { geometry in
+            ZStack {
+                if card.isFaceUp {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(Color.white)
                     
-                Text(card.content)
-            } else {
-                RoundedRectangle(cornerRadius: 10.0)
-                    .fill()
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(lineWidth: edgeLineWidth)
+                        
+                    Text(card.content)
+                } else {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill()
+                }
             }
-        }
-        .aspectRatio(2.0/3.0, contentMode: .fit)
+//            .aspectRatio(2.0/3.0, contentMode: .fit)
+            .font(Font.system(size: fontSize(for: geometry.size)))
+        })
     }
+    
+    // MARK: - Drawing Constants
+    let cornerRadius: CGFloat = 10
+    let edgeLineWidth: CGFloat = 3   
+    func fontSize(for size: CGSize) -> CGFloat {
+        min(size.width, size.height) * 0.75
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
