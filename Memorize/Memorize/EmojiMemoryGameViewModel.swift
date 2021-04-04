@@ -15,7 +15,7 @@ class EmojiMemoryGameViewModel : ObservableObject {
     
     static func createMemoryGame() -> EmojiMemoryGameModel<String> {
         let emojis: Array<String> = ["👻", "🎃", "🕷", "💀", "🧚‍♀️", "🧛", "👹", "👺", "🧝", "🧞‍♀️", "🤖", "🦉", "🍫", "🍭", "🏚", "🌚", "👾"]
-        return EmojiMemoryGameModel<String>(numberOfPairsOfCards: Int.random(in: 2...5)) {
+        return EmojiMemoryGameModel<String>(numberOfPairsOfCards: 4) {
             pairIndex in emojis[pairIndex % emojis.count]
         }
     }

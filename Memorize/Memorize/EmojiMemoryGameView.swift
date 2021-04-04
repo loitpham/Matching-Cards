@@ -38,8 +38,10 @@ struct CardView: View {
                         
                     Text(card.content)
                 } else {
-                    RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill()
+                    if !card.isMatched {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .fill()
+                    }
                 }
             }
 //            .aspectRatio(2.0/3.0, contentMode: .fit)

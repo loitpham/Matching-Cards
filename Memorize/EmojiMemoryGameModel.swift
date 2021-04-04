@@ -7,12 +7,22 @@
 
 import Foundation
 
-struct EmojiMemoryGameModel<CardContent> {
+struct EmojiMemoryGameModel<CardContent> where CardContent: Equatable {
     var cards: Array<Card>
+    var indexOfFaceUpCard: Int? {
+        get {
+            cards.indices.filter { cards[$0].isFaceUp }.only
+        }
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = index == newValue
+            }
+        }
+    }
     
     struct Card: Identifiable {
         var id: Int
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
     }
@@ -28,10 +38,21 @@ struct EmojiMemoryGameModel<CardContent> {
     }
     
     mutating func choose(card: Card) {
-        print("Before: card chosen: \(card)")
-        let chosenIndex = cards.firstIndex(matching: card)
-        cards[chosenIndex].isFaceUp = !cards[chosenIndex].isFaceUp
-        print("After: card status: \(cards[chosenIndex])")
+        print("card chosen: \(card)")
+        if let chosenIndex = cards.firstIndex(matching: card),
+           !cards[chosenIndex].isFaceUp,
+           !cards[chosenIndex].isMatched {
+            
+            if let potentialMatchIndex = indexOfFaceUpCard { // Another card has been selected
+                if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                    cards[chosenIndex].isMatched = true
+                    cards[potentialMatchIndex].isMatched = true
+                }
+                cards[chosenIndex].isFaceUp = true
+            } else {
+                indexOfFaceUpCard = chosenIndex
+            }
+            
+        }
     }
-    
 }
