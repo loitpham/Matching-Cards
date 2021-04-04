@@ -10,14 +10,13 @@ import SwiftUI
 struct EmojiMemoryGameView: View { // thinks of : as "behaves as" rather than "is a"
     @ObservedObject var viewModel: EmojiMemoryGameViewModel
     
-    var body: some View {
-        HStack {
-            ForEach(viewModel.cards) { card in
+    var body: some View {        
+        GridView(items: viewModel.cards) {card in
                 CardView(card: card)
                     .onTapGesture {
                         viewModel.choose(card: card)
                     }
-            }
+                    .padding(5)
         }
         .padding()
         .foregroundColor(Color.orange)

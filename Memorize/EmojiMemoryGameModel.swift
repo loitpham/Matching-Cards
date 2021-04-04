@@ -29,19 +29,9 @@ struct EmojiMemoryGameModel<CardContent> {
     
     mutating func choose(card: Card) {
         print("Before: card chosen: \(card)")
-        let chosenIndex = index(of: card)
+        let chosenIndex = cards.firstIndex(matching: card)
         cards[chosenIndex].isFaceUp = !cards[chosenIndex].isFaceUp
         print("After: card status: \(cards[chosenIndex])")
     }
     
-    // external name: 'of'
-    // internal name: 'card'
-    func index(of card: Card) -> Int {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-        return 0 // TODO: replace 0 with some NotFound constant
-    }
 }
